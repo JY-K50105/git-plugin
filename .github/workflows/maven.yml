@@ -23,4 +23,19 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B package --file pom.xml -DskipTests=true 
+      run: mvn -B package --file pom.xml -DskipTests=true
+    - name: hhhhhhhhhh
+      id: fetch-war
+      run: |
+        echo ${{ secrets.GITHUB_TOKEN }}
+        echo ${{ github.event.release.upload_url }}
+    - name: Upload Release Asset
+      id: upload-war
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: /home/runner/work/git-plugin/git-plugin/target/
+        asset_name: git.hpi
+        asset_content_type: application/java-archive
